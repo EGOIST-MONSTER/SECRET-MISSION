@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SECRET MISSION</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Share+Tech+Mono&display=swap');
+*{box-sizing:border-box}
+:root{--red:#b51f2a;--red2:#e43b45;--ink:#070a0d;--paper:#d8d2c3;--muted:#92969a}
+html,body{margin:0;min-height:100%;background:#030507;color:#eee}
+body{font-family:Georgia,serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;background-image:linear-gradient(90deg,rgba(2,5,8,.94) 0%,rgba(2,5,8,.88) 20%,rgba(2,5,8,.48) 36%,rgba(2,5,8,.38) 100%),linear-gradient(rgba(2,5,8,.38),rgba(2,5,8,.66)),url('graveyard_ui.png');background-size:cover;background-position:center;filter:saturate(.72) contrast(1.08);z-index:-3}
+body:after{content:"";position:fixed;inset:0;background:radial-gradient(circle at 50% 40%,transparent 20%,rgba(0,0,0,.6) 100%);z-index:-2;pointer-events:none}
+.screen{display:none;width:min(1240px,94vw);min-height:88vh;margin:6vh auto;padding:36px 0;position:relative}.active{display:block;animation:fade .55s ease}
+.start-wrap{min-height:82vh;display:grid;place-items:center}
+.box{position:relative;background:linear-gradient(145deg,rgba(8,12,16,.96),rgba(10,13,15,.88));border:1px solid #555b5e;box-shadow:0 18px 70px rgba(0,0,0,.75),inset 0 0 35px rgba(255,255,255,.025);padding:44px}
+.box:before,.box:after{content:"";position:absolute;width:28px;height:28px;border-color:#9a9a93;opacity:.55}.box:before{top:8px;left:8px;border-top:1px solid;border-left:1px solid}.box:after{right:8px;bottom:8px;border-right:1px solid;border-bottom:1px solid}
+.start-box{text-align:center;max-width:900px;width:100%;padding:68px 60px}
+.label,.mono{font-family:'Share Tech Mono',monospace}.label{font-size:14px;letter-spacing:4px;color:#a7aaab;margin-bottom:20px}.red{color:#df3640}
+h1,h2{font-family:Cinzel,Georgia,serif;text-transform:uppercase;letter-spacing:4px}h1{font-size:clamp(40px,6vw,76px);margin:12px 0 26px;text-shadow:0 3px 20px #000}h2{font-size:clamp(25px,3vw,40px);margin:8px 0 24px}
+p{font-size:20px;line-height:1.7;color:#d0d0cc;margin:10px auto;max-width:780px}
+.opening-quote{font-family:Cinzel,Georgia,serif;font-size:18px;line-height:1.7;color:#c9c7c0;margin:26px auto 8px}.opening-quote .small{font:12px 'Share Tech Mono';color:#85898b}.opening-note{font:12px 'Share Tech Mono';letter-spacing:1px;color:#777;margin-top:12px}.jp{font-family:'Share Tech Mono',monospace;color:#8b8f92;letter-spacing:2px;font-size:13px}
+button{font-family:'Share Tech Mono',monospace;margin-top:28px;padding:17px 44px;background:linear-gradient(#c52b34,#8e151d);color:white;border:1px solid #e05b62;box-shadow:0 0 25px rgba(180,20,30,.18);font-weight:bold;letter-spacing:3px;font-size:15px;cursor:pointer;transition:.2s}button:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(180,20,30,.3)}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr) 230px;gap:18px;align-items:stretch}.side{background:rgba(5,8,11,.88);border:1px solid #454b4f;padding:22px 16px;box-shadow:0 12px 45px #000}.side h3{font-family:Cinzel;margin:0 0 8px;letter-spacing:2px;font-size:16px}.side .sub{font:12px 'Share Tech Mono';color:#777;margin-bottom:18px}.case{display:flex;align-items:center;gap:10px;padding:13px 8px;border-top:1px solid #252a2d;font:12px 'Share Tech Mono';color:#85898b}.case.active{background:linear-gradient(90deg,rgba(170,20,30,.3),transparent);color:#eee;border-left:2px solid var(--red)}.case.done{color:#bbb}.qmain{min-width:0}.qbox{min-height:660px;padding:46px 52px;display:flex;flex-direction:column;justify-content:center}.qtop{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #3b4043;padding-bottom:18px;margin-bottom:28px}.qtitle{font:15px 'Share Tech Mono';letter-spacing:3px;color:#d63a43}.topic{font:12px 'Share Tech Mono';color:#83888b;letter-spacing:2px}.question{font-size:24px;line-height:1.75;color:#eee;margin:20px 0 38px}.question strong{color:#fff}.formula{font-family:'Share Tech Mono';font-size:22px;display:block;margin:18px 0;color:#f0f0ea}
+input{width:100%;padding:18px 20px;background:#06090b;color:#fff;border:1px solid #555d61;font:22px 'Share Tech Mono';outline:none;text-align:center}input:focus{border-color:#b92c35;box-shadow:0 0 0 2px rgba(185,44,53,.12)}.error{min-height:22px;text-align:center;color:#df555d;font:13px 'Share Tech Mono';margin-top:12px;letter-spacing:1px}
+.right .stat{font:12px 'Share Tech Mono';color:#aaa;border-bottom:1px solid #292d30;padding:14px 0}.numbers{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:12px}.num{border:1px solid #474c4e;padding:9px 3px;text-align:center;font:18px 'Share Tech Mono';color:#d7d3c7}.num.empty{color:#444}.evidence{margin-top:24px;border:1px solid #3b3e3f;padding:18px;text-align:center;color:#8e9192;font:12px 'Share Tech Mono';line-height:1.6}.seal{font-family:Cinzel;color:#c52d35;letter-spacing:2px;margin-top:20px}
+.rewardbox{max-width:1050px;margin:8vh auto 0;text-align:center;min-height:620px;display:flex;flex-direction:column;justify-content:center;align-items:center}.answer-label{font:12px 'Share Tech Mono';letter-spacing:3px;color:#8c9194}.number{font:800 110px 'Share Tech Mono';color:#eee;text-shadow:0 0 28px rgba(255,255,255,.12);margin:22px 0;animation:pop .7s ease}.reward{font-family:Cinzel,Georgia,serif;font-size:30px;line-height:1.55;max-width:850px}.reward .small{font:14px 'Share Tech Mono';color:#9a9da0}.reward-img{max-width:min(620px,90%);max-height:390px;object-fit:contain;border:1px solid #555;margin:10px 0 20px;box-shadow:0 0 35px #000}
+.flipRow{display:flex;justify-content:center;gap:clamp(12px,2vw,28px);flex-wrap:wrap;margin:42px 0}.flipToken{display:inline-flex;align-items:center;justify-content:center;min-width:48px;height:78px;perspective:700px}.flipInner{position:relative;width:100%;height:100%;font:800 clamp(38px,5vw,66px) 'Share Tech Mono';color:#eee;transition:transform .7s cubic-bezier(.2,.75,.25,1);transform-style:preserve-3d}.flipFace{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;backface-visibility:hidden}.flipBack{transform:rotateY(180deg);color:#d9d4c6}.flipToken.flipped .flipInner{transform:rotateY(180deg)}.finalbox{max-width:1100px;margin:5vh auto 0;text-align:center;min-height:700px;padding:70px 50px}.revealNums,.revealLetters{font:800 clamp(38px,6vw,72px) 'Share Tech Mono';letter-spacing:12px;margin:42px 0}.revealLetters{color:#d9d4c6}.hidden{display:none !important}.ending{animation:fade 1s ease}.ending h1{font-size:clamp(32px,5vw,62px)}.ending .complete{color:#df3a43;font:16px 'Share Tech Mono';letter-spacing:4px}.restart{background:transparent;border-color:#555;color:#aaa}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@keyframes pop{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@media(max-width:980px){.layout{grid-template-columns:1fr}.side{display:none}.screen{width:94vw;margin:2vh auto}.qbox{min-height:650px;padding:35px 28px}.box{padding:30px}.start-box{padding:50px 25px}.question{font-size:20px}.rewardbox,.finalbox{margin-top:3vh}}
+</style>
+</head>
+<body>
+<section id="start" class="screen active"><div class="start-wrap"><div class="box start-box"><div class="label red">CLASSIFIED // SECRET CASE</div><h1>SECRET MISSION</h1><p>You've been selected for a secret mission.</p><p>You are nowhere near L, obviously, but let's see how worthy you are to assist him.</p><div class="jp">秘密 // THE CASE BEGINS</div><button onclick="startMission()">BET.</button></div></div></section>
+
+<section id="question" class="screen"><div class="layout">
+<aside class="side"><div class="label">MISSION AGENT</div><div class="sub">CASE STATUS: ACTIVE</div><div id="caseList"></div><div class="evidence">“The truth is always hidden...<br>in plain sight.”<div class="seal">— L</div></div></aside>
+<main class="qmain"><div class="box qbox"><div class="qtop"><span id="qLabel" class="qtitle"></span><span id="topic" class="topic"></span></div><div id="qText" class="question"></div><input id="answer" autocomplete="off" inputmode="text" placeholder="ENTER YOUR ANSWER"><div id="error" class="error"></div><button onclick="checkAnswer()">SUBMIT ANSWER →</button></div></main>
+<aside class="side right"><div class="label">CASE FILE</div><div class="stat">NUMBERS COLLECTED</div><div id="numbers" class="numbers"></div><div class="stat" style="margin-top:20px">CLUES FOUND <span id="rewardCount" style="float:right">0 / 7</span></div><div class="evidence">“Don’t ever give up… Even if it’s painful, even if it’s agonizing, don’t try to take the easy way out.”<div class="seal">— Zenitsu Agatsuma</div></div></aside>
+</div></section>
+
+<section id="reward" class="screen"><div class="box rewardbox"><div class="answer-label">CORRECT ANSWER</div><div id="number" class="number"></div><div id="rewardMedia"></div><div id="rewardText" class="reward"></div><button onclick="nextQuestion()">NEXT →</button></div></section>
+
+<section id="final" class="screen"><div class="box finalbox"><div class="label red">MISSION COMPLETE</div><div id="nums" class="flipRow"></div><div id="decodeHint" class="jp">CLICK UNCOVER TO REVEAL</div><button id="uncoverBtn" onclick="startUncover()">UNCOVER</button><div id="ending" class="hidden ending"><h1>Happy 15th, Maths Princess.</h1><p>You were worthy after all.</p><button id="restartBtn" class="restart hidden" onclick="location.reload()">REOPEN CASE</button></div></div></section>
+
+<script>
+const questions=[
+ {topic:'COORDINATE GEOMETRY',q:'If the distance between the points (4, p) and (1, 0) is 5 units (where p > 0), find the value of p/4.',a:'1',n:'1',r:'DOMAIN EXPANSION: INFINITE MATHEMATICS'},
+ {topic:'ARITHMETIC PROGRESSIONS',q:'If the sum of the first 5 terms of an AP is 65 and its first term is 3, find its common difference (d).',a:'5',n:'5',r:'“I\'ll take a potato chip... and eat it!”'},
+ {topic:'MENSURATION',q:'If the total surface area of a solid hemisphere is 75π cm², find the value of r² (where r is the radius in cm).',a:'25',n:'25',r:'“Set your heart ablaze!”<br><span class="small">— Kyōjurō Rengoku</span>'},
+ {topic:'STATISTICS',q:'L is analyzing the reaction times (in seconds) of suspects during a high-stakes interrogation at HQ. The grouped frequency distribution of their response times is recorded below, but one frequency (f) corresponding to the 40–60 second interval is missing.<br><br><table style="width:100%;border-collapse:collapse;font:15px Share Tech Mono;color:#ccc"><tr><th style="border-bottom:1px solid #555;padding:8px">Response Time</th><th style="border-bottom:1px solid #555;padding:8px">Number of Suspects</th></tr><tr><td style="padding:7px">0–20</td><td>2</td></tr><tr><td style="padding:7px">20–40</td><td>3</td></tr><tr><td style="padding:7px">40–60</td><td>f (Missing)</td></tr><tr><td style="padding:7px">60–80</td><td>6</td></tr><tr><td style="padding:7px">80–100</td><td>4</td></tr></table><br>If the mean response time across all suspects is calculated to be 57 seconds, find the missing frequency f.',a:'5',n:'5',r:'“This is my perfect victory! That\'s right, I win!”'},
+ {topic:'TRIANGLES',q:'The areas of two similar triangles are in the ratio 4 : 9. If the ratio of their corresponding altitudes is given as 2/x, find the value of the expression x − 2.',a:'1',n:'1',r:'',img:'muichiro.jpg'},
+ {topic:'TRIGONOMETRY',q:'Find the value of x that satisfies the equation:<span class="formula">x · sin 30° · cos 60° · tan 45° = 9/2</span>',a:'18',n:'18',r:'“It’s leviOsa, not levioSA!”<br><span class="small">— Hermione Granger</span>'},
+ {topic:'ALGEBRA',q:'To find the manga volume number where Koyoharu Gotouge details Kanao Tsuyuri\'s backstory regarding her choice of surname from a list of options (including <i>Kocho</i> and <i>Kanzaki</i>, with Aoi hoping she would pick her last name so they could be sisters), solve the system of equations:<span class="formula">2x + 3y = 95<br>5x − 2y = 57</span>',a:'19',n:'19',r:'“Water Breathing, 11th Form: Dead Calm.”<br><span class="small">— Tomioka Giyu</span>'}
+];
+let i=0,collected=[];
+const $=id=>document.getElementById(id);
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+function startMission(){i=0;collected=[];renderCases();loadQuestion();show('question')}
+function renderCases(){ $('caseList').innerHTML=questions.map((q,k)=>`<div class="case ${k===i?'active':''} ${k<i?'done':''}"><b>Q${String(k+1).padStart(2,'0')}</b><span>${q.topic}</span></div>`).join(''); $('numbers').innerHTML=questions.map((_,k)=>`<div class="num ${k>=collected.length?'empty':''}">${collected[k]||'—'}</div>`).join('');$('rewardCount').textContent=`${collected.length} / 7`}
+function loadQuestion(){renderCases();$('qLabel').textContent=`QUESTION ${String(i+1).padStart(2,'0')} / 07`;$('topic').textContent=questions[i].topic;$('qText').innerHTML=questions[i].q;$('answer').value='';$('error').textContent='';setTimeout(()=>$('answer').focus(),150)}
+function checkAnswer(){const input=$('answer').value.trim().toLowerCase();if(input===questions[i].a.toLowerCase()){collected.push(questions[i].n);$('number').textContent=questions[i].n;$('rewardText').innerHTML=questions[i].r;$('rewardMedia').innerHTML=questions[i].img?`<img class="reward-img" src="${questions[i].img}" alt="Funny Demon Slayer evidence">`:'';show('reward')}else $('error').textContent='HOW DISAPPOINTING.'}
+function nextQuestion(){i++;if(i<questions.length){loadQuestion();show('question')}else showFinal()}
+let revealIndex=2;
+function showFinal(){
+  const vals=collected.slice();
+  $('nums').innerHTML=vals.map((v,k)=>{const letter={25:'Y',5:'E',1:'A',18:'R',19:'S'}[v];return `<span class="flipToken" data-i="${k}"><span class="flipInner"><span class="flipFace">${v}</span><span class="flipFace flipBack">${k<2?v:letter}</span></span></span>`}).join('');
+  revealIndex=2;
+  $('decodeHint').textContent='CLICK UNCOVER TO REVEAL';
+  $('uncoverBtn').style.display='inline-block';
+  $('ending').classList.add('hidden');
+  $('restartBtn').classList.add('hidden');
+  show('final');
+}
+function startUncover(){
+  $('uncoverBtn').style.display='none';
+  $('decodeHint').textContent='';
+  const tokens=[...document.querySelectorAll('.flipToken')];
+  let k=2;
+  function flipNext(){
+    if(k>=tokens.length){
+      setTimeout(()=>{
+        $('ending').classList.remove('hidden');
+        setTimeout(()=>{$('restartBtn').classList.remove('hidden')},2000);
+      },1000);
+      return;
+    }
+    tokens[k].classList.add('flipped');
+    k++;
+    setTimeout(flipNext,700);
+  }
+  flipNext();
+}
+$('answer').addEventListener('keydown',e=>{if(e.key==='Enter')checkAnswer()});
+</script>
+</body>
+</html>
